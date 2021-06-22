@@ -3,6 +3,15 @@ import TodoItems from "./TodoItems";
 import "./TodoList.css";
  
 class TodoList extends Component {
+ deleteItem(key) {
+  var filteredItems = this.state.items.filter(function (item) {
+    return (item.key !== key);
+  });
+
+  this.setState({
+    items: filteredItems
+  });
+ }
  constructor(props) {
     super(props);
      this.state = {
@@ -10,6 +19,7 @@ class TodoList extends Component {
      };
  
     this.addItem = this.addItem.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
   }
   addItem(e) {
      if (this._inputElement.value !== "") {
@@ -44,7 +54,8 @@ class TodoList extends Component {
             <button type="submit">add</button>
           </form>
         </div>
-         <TodoItems entries={this.state.items}/>
+         <TodoItems entries={this.state.items}
+                    delete={this.deleteItem}/>
       </div>
     );
   }
